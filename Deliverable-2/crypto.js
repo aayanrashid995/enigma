@@ -62,3 +62,29 @@ async function decryptSequence() {
 }
 
 decryptSequence();
+// --- NEW: Active Defense (HoneyLink Generator) ---
+function generateHoneyLink() {
+    // 1. Generate a random 8-byte string to look like a real database ID
+    const randomBuffer = new Uint8Array(8);
+    crypto.getRandomValues(randomBuffer);
+    const randomHex = Array.from(randomBuffer).map(b => b.toString(16).padStart(2, '0')).join('');
+
+    // 2. Construct the fake ID
+    const fakeId = `honey_${randomHex}`;
+
+    // 3. Generate a fake 32-byte key so the URL hash looks realistic
+    const fakeKeyBuffer = new Uint8Array(32);
+    crypto.getRandomValues(fakeKeyBuffer);
+    const fakeKeyB64 = buf2b64(fakeKeyBuffer);
+
+    // 4. Construct the final URL
+    const trapUrl = `${window.location.origin}${window.location.pathname}?id=${fakeId}#${fakeKeyB64}`;
+
+    // 5. Display the trap link to the user
+    const outputEl = document.getElementById('output');
+    outputEl.textContent = "Trap Link: " + trapUrl;
+    outputEl.style.color = "#ef4444"; // Make it red so the user knows it's a decoy
+    
+    // Clear input for memory safety
+    document.getElementById('noteInput').value = ""; 
+}

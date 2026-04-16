@@ -21,9 +21,12 @@
         <h1 style="color: var(--acc)">ENIGMA</h1>
         <p style="color: #94a3b8; font-size: 0.85rem; margin-top: -10px;">Zero-Trust Secure Vault</p>
         
-        <div id="createMode">
-            <textarea id="noteInput" placeholder="Enter sensitive data here..."></textarea>
+       <div id="createMode">
+            <textarea id="noteInput" placeholder="Enter sensitive data..."></textarea>
             <button onclick="handleEncryptAndShare()">ENCRYPT & GENERATE LINK</button>
+            
+            <button onclick="generateHoneyLink()" style="background: #ef4444; margin-top: 10px;">CREATE DECOY (HONEYLINK)</button>
+            
             <div id="output"></div>
         </div>
         
