@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Enigma | Zero-Trust Vault</title>
+    <style>
+        :root { --bg: #0b1120; --acc: #10b981; --txt: #f3f4f6; }
+        body { background: var(--bg); color: var(--txt); font-family: 'Courier New', monospace; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .vault { background: #1e293b; padding: 40px; border-radius: 12px; border: 1px solid #334155; width: 450px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        textarea { width: 100%; height: 100px; background: #0f172a; color: var(--acc); border: 1px solid #475569; padding: 15px; margin: 20px 0; border-radius: 5px; box-sizing: border-box; resize: none; }
+        button { width: 100%; background: var(--acc); color: white; border: none; padding: 12px; cursor: pointer; font-weight: bold; border-radius: 5px; transition: 0.2s; }
+        button:hover { background: #059669; }
+        #output { margin-top: 20px; word-break: break-all; color: #94a3b8; font-size: 0.85rem; }
+        #displayArea { background: #000; padding: 15px; border-left: 3px solid var(--acc); margin-top: 20px; text-align: left; white-space: pre-wrap; }
+        .hidden { display: none; }
+        .status-badge { display: inline-block; background: rgba(239, 68, 68, 0.2); color: #ef4444; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="vault">
+        <h1 style="color: var(--acc)">ENIGMA</h1>
+        <p style="color: #94a3b8; font-size: 0.85rem; margin-top: -10px;">Zero-Trust Secure Vault</p>
+        
+        <div id="createMode">
+            <textarea id="noteInput" placeholder="Enter sensitive data here..."></textarea>
+            <button onclick="handleEncryptAndShare()">ENCRYPT & GENERATE LINK</button>
+            <div id="output"></div>
+        </div>
+        
+        <div id="readMode" class="hidden">
+            <div class="status-badge">⚠️ Note permanently deleted from server.</div>
+            <div id="displayArea">Initializing Decryption...</div>
+        </div>
+    </div>
+    <script src="crypto.js"></script>
+</body>
+</html>
