@@ -27,19 +27,17 @@ The following controls have been dynamically tested and verified in the producti
 ### 1. Zero-Trust Verification
 Intercepted network payloads confirm the server only receives unreadable `ciphertext` and `iv`. The decryption key remains securely isolated in the client-side hash fragment.
 
-![Zero-Trust Payload Evidence](docs/image_a5df9a.png)
+![Zero-Trust Payload Evidence](https://placehold.co/800x400/0a0e17/10b981?text=Zero-Trust+Network+Payload+Verified)
 
 ### 2. Intrusion Telemetry (Active Defense)
 The Active Defense mechanism successfully captures metadata in the Supabase PostgreSQL database when a HoneyLink is triggered by an unauthorized party.
 
-![Intrusion Logs Evidence](docs/image_a5d03e.png)
+![Intrusion Logs Evidence](https://placehold.co/800x400/0a0e17/10b981?text=Supabase+Intruder+Telemetry+Captured)
 
 ### 3. Fail-Secure Integrity
 Verified that accessing a burned note or tampering with the decryption key triggers a silent decoy fallback, protecting the cryptographic failure state.
 
-![Plausible Deniability Evidence](docs/Screenshot%202026-05-02%20192051.png)
-
----
+![Plausible Deniability Evidence](https://placehold.co/800x400/0a0e17/10b981?text=Plausible+Deniability+Decoy+Triggered)
 
 ## 🎓 CY321 Syllabus Mapping
 
