@@ -1,72 +1,77 @@
+# ENIGMA 🔐 | Zero-Trust Vault & Active Defense
 
+![Version](https://img.shields.io/badge/version-1.0.0-emerald?style=for-the-badge)
+![License](https://img.shields.io/badge/license-Academic-blue?style=for-the-badge)
+![Architecture](https://img.shields.io/badge/Architecture-Zero--Trust-critical?style=for-the-badge)
+![Tech Stack](https://img.shields.io/badge/Stack-Node.js%20|%20Supabase%20|%20WebCrypto-orange?style=for-the-badge)
 
-# Enigma 🔐  
-**Zero-Trust Secure Vault & Active Defense Web App**
+**Enigma** is a secure, self-destructing digital vault designed for sharing sensitive data—such as passwords, API keys, and private notes—under a strict **Zero-Trust model**. 
 
-Enigma is a highly secure, self-destructing digital vault designed for sharing sensitive text such as passwords, API keys, and private notes. Built with a strict **Zero-Trust architecture**, it ensures that your data is encrypted directly in your browser before it ever leaves your device.
-
-This project was developed as part of the **Secure Software Development (CY321)** course.
-
----
-
-## ✨ Core Features
-
-- **Client-Side Cryptography**  
-  - Uses AES-256 (via WebCrypto API) to encrypt text locally.  
-  - Decryption key is passed via the URL hash fragment (`#KEY`), meaning the server never sees or stores your password.  
-
-- **Burn-After-Reading**  
-  - Once a legitimate note is decrypted and viewed, it is cryptographically shredded and permanently deleted from the database.  
-
-- **Plausible Deniability (Decoys)**  
-  - Incorrect passwords do not trigger an error. Instead, a fake *Decoy Note* is generated to mislead brute-force attempts.  
-
-- **HoneyLinks (Active Defense)**  
-  - Generate fake, trackable secret links as traps.  
-  - If a malicious actor opens a HoneyLink, the app silently logs their IP address and User-Agent to detect breaches.  
+Developed as the final semester project for **CY321: Secure Software Development** at the GIK Institute of Engineering Sciences and Technology.
 
 ---
 
-## 🛠 Tech Stack (Proposed)
+## 🛡️ Core Security Architecture
 
-| Layer      | Technology Options |
-|------------|--------------------|
-| **Frontend** | HTML, CSS, JavaScript (WebCrypto API) |
-| **Backend**  | Node.js / Python FastAPI |
-| **Database** | Firebase / SQLite |
+*   **Zero-Trust Client-Side Cryptography:** Payloads are encrypted locally in the browser using the WebCrypto API (`AES-256-GCM`). The decryption key is attached to the URL as a hash fragment (`#KEY`), ensuring it is never transmitted over the network or stored on the backend server.
+*   **Burn-After-Reading Semantic:** Once a legitimate note is retrieved, the backend API immediately executes a destructive delete operation, permanently purging the record from the database.
+*   **Plausible Deniability (Brute-Force Mitigation):** Incorrect decryption attempts (due to invalid keys or tampered ciphertext) do not trigger system errors. Instead, the application generates structurally valid "Decoy Notes" (e.g., *"Meeting moved to 4 PM"*) to mislead adversaries and thwart brute-force verification.
+*   **HoneyLinks (Active Defense):** Users can generate trackable "trap links". If a malicious actor scans or accesses a HoneyLink, the API silently logs the intruder's IP address and User-Agent to an isolated telemetry database table.
+
+---
+
+## 🧪 Dynamic Security Testing (Deliverable 3 Evidence)
+
+The following controls have been dynamically tested and verified in the production environment:
+
+### 1. Zero-Trust Verification
+Intercepted network payloads confirm the server only receives unreadable `ciphertext` and `iv`. The decryption key remains securely isolated in the client-side hash fragment.
+
+![Zero-Trust Payload Evidence](docs/image_a5df9a.png)
+
+### 2. Intrusion Telemetry (Active Defense)
+The Active Defense mechanism successfully captures metadata in the Supabase PostgreSQL database when a HoneyLink is triggered by an unauthorized party.
+
+![Intrusion Logs Evidence](docs/image_a5d03e.png)
+
+### 3. Fail-Secure Integrity
+Verified that accessing a burned note or tampering with the decryption key triggers a silent decoy fallback, protecting the cryptographic failure state.
+
+![Plausible Deniability Evidence](docs/Screenshot%202026-05-02%20192051.png)
+
+---
+
+## 🎓 CY321 Syllabus Mapping
+
+This project explicitly implements the following core concepts from the CY321 curriculum:
+
+*   **Week 2 & 4 (Secure SDLC & STRIDE):** Implemented HoneyLink-based active defense to mitigate *Reconnaissance* and *Spoofing* threats.
+*   **Week 7 & 8 (Defensive Coding):** Strict XSS prevention achieved by rendering decrypted data exclusively via `textContent`. Enforced 5000-byte input validation bounds on the client side.
+*   **Week 9 (Secure Implementation):** Explicit memory safety achieved through JavaScript object nullification (`key = null; text = null;`) immediately following cryptographic operations.
+*   **Week 13 & 14 (Web Defense):** Zero-Trust key transport via URL hash fragments. Server-side hardening implemented using `helmet`, strict CORS, and API rate-limiting to mitigate DoS.
+
+---
+
+## 🛠️ Technical Stack
+
+| Layer | Technology | Purpose |
+| :--- | :--- | :--- |
+| **Frontend** | Vanilla JS, HTML5, CSS3 | Lightweight, zero-dependency client execution. |
+| **Cryptography** | WebCrypto API | Native browser implementation of `AES-256-GCM`. |
+| **Backend API** | Node.js + Express | Handles routing, rate-limiting, and DB interfacing. |
+| **Database** | Supabase (PostgreSQL) | Stores ciphertext and intruder telemetry logs. |
 
 ---
 
 ## 🚀 Getting Started
 
-### Clone the repository
-```bash
-git clone https://github.com/yourusername/enigma.git
-```
+### Prerequisites
+*   Node.js (v16+)
+*   A Supabase Project (for PostgreSQL database)
 
-### Navigate to the project directory
-```bash
-cd enigma
-```
-
-### Run the development server
-```bash
-# Add your start command here (e.g., npm start / uvicorn main:app --reload)
-```
-
----
-
-## ⚠️ Security Disclaimer
-
-This project is an **academic prototype** developed for a cybersecurity course.  
-It demonstrates theoretical and practical applications of cryptography and active defense.  
-**Do not use this project in production environments.**
-
----
-
-## 👨‍💻 Developer
-
-- **Name:** Aayan Rashid (2023002)  
-- **Institution:** GIK Institute of Engineering Sciences and Technology  
-
+### Installation
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/aayanrashid/enigma.git](https://github.com/aayanrashid/enigma.git)
+   cd enigma
 
