@@ -1,9 +1,10 @@
+require("dotenv").config(); // <-- Added this line to load the .env file
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const crypto = require("crypto");
-const supabase = require("./supabase");
+const supabase = require("./supabase"); // <-- Your modular database connection!
 
 const app = express();
 const PORT = process.env.PORT || 3000;
